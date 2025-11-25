@@ -132,7 +132,7 @@ jobs:
     name: Generate and Publish SBOM
     outputs:
       sbom_hash: ${{ steps.determine_sbom_hash.outputs.SBOM_HASH }}
-    needs: [configure, scan, create-gh-release]
+    needs: [configure, scan]
     runs-on: ubuntu-latest
     permissions:
       # Add any additional permissions your job requires here
@@ -193,7 +193,7 @@ jobs:
 
   create_attestations:
     name: Create Attestations
-    needs: [configure, scan, create-gh-release, build, sbom]
+    needs: [configure, scan, build, sbom]
     runs-on: ubuntu-latest
     permissions:
       id-token: write
