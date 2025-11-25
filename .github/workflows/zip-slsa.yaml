@@ -9,11 +9,11 @@ on:
   workflow_dispatch: {}
 
 env:
-  OCTOPUS_URL: https://your.octopus.app
-  OCTOPUS_SERVICE_ACCOUNT: service account id
-  OCTOPUS_SPACE: Your space
-  PACKAGE_ID: YourApp
-  SBOM_PACKAGE: YourApp.SBOM
+  OCTOPUS_URL: https://wrg.octopus.app
+  OCTOPUS_SERVICE_ACCOUNT: b45a10cc-1380-480d-ab25-28e36d54cd63
+  OCTOPUS_SPACE: New Cascadia Imports
+  PACKAGE_ID: WealthCompass.RetirementTracker
+  SBOM_PACKAGE: WealthCompass.RetirementTracker.SBOM
 
 jobs:
   configure:
@@ -37,7 +37,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run Trivy vulnerability scanner on repo
-        uses: aquasecurity/trivy-action@0.32.0
+        uses: aquasecurity/trivy-action@0.33.1
         with:
           scan-type: "fs"
           ignore-unfixed: true
@@ -110,7 +110,7 @@ jobs:
           dotnet publish -c Release -o ../demoapp-publish -r win-x64 --self-contained true /p:UseAppHost=true
 
       - name: Run Trivy vulnerability scanner on published folder
-        uses: aquasecurity/trivy-action@0.32.0
+        uses: aquasecurity/trivy-action@0.33.1
         with:
           scan-type: "fs"
           scan-ref: "demoapp-publish"
