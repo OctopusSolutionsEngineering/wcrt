@@ -51,31 +51,6 @@ jobs:
         with:
           sarif_file: "trivy-results.sarif"
 
-  create-gh-release:
-    name: Create GitHub Release
-    needs: [configure, scan]
-    runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-      contents: write
-    steps:
-      - name: Checkout Code to build website
-        uses: actions/checkout@v1
-
-      - name: Create Release for GitHub
-        id: create_release
-        uses: ncipollo/release-action@v1
-        if: github.ref == 'refs/heads/main'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
-        with:
-          tag: "${{ needs.configure.outputs.version }}"
-          name: Release ${{ needs.configure.outputs.version }}
-          body: |
-            Automatic Release creation by GitHub Action
-            Commit Message: ${{ github.event.head_commit.message }}
-          draft: false
-
   build:
     name: Build and Scan packages
     needs: [configure, scan, create-gh-release]
