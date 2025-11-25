@@ -53,7 +53,7 @@ jobs:
 
   build:
     name: Build and Scan packages
-    needs: [configure, scan, create-gh-release]
+    needs: [configure, scan]
     runs-on: ubuntu-latest
     permissions:
       id-token: write
